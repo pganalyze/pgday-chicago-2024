@@ -5,12 +5,13 @@ import math
 from ortools.sat.python import cp_model
 
 
-def build_basic_model(problem, settings):
+def build_basic_model(problem, max_num_indexes, max_iwo):
     """Build the basic model, without any special constraints or objectives, using the Reader data.
 
     Args:
       problem: The problem data.
-      settings: The optimizer settings.
+      max_num_indexes: Maximum number of possible indexes.
+      max_iwo: Maximum index write overhead.
 
     Returns:
       A clean model.
@@ -31,9 +32,9 @@ def build_basic_model(problem, settings):
     model.num_indexes = len(model.index_iwo)
 
     # Misc.
-    model.max_num_indexes = settings["Maximum Number of Possible Indexes"] + \
+    model.max_num_indexes = max_num_indexes + \
         problem["Number of Existing Indexes"]  # Since einds are fixed, they must be included here
-    model.max_iwo = settings["Maximum Index Write Overhead"]
+    model.max_iwo = max_iwo
 
     ### Objective
 

@@ -17,8 +17,8 @@ class Reader:
     _multiplier = 100
 
     # Default optimizer settings
-    _maximum_num_indexes = None  # Maximum number of indexes allowed
-    _maximum_iwo = None          # Maximum Index Write Overhead allowed
+    _rule_defaults = {"Maximum Number of Possible Indexes": None,
+                      "Maximum Index Write Overhead": None}
 
     def __init__(self, problem, time_limit, settings=None):
         """Read and store the problem data and the optimizer settings from serialized JSON objects.
@@ -100,11 +100,15 @@ class Reader:
 
     def get_maximum_num_indexes(self):
         """Return the maximum number of indexes constraint value."""
-        return self._settings["Maximum Number of Possible Indexes"]
+        for rule in self._settings["Rules"]:
+            if rule["Name"] == "Maximum Number of Possible Indexes":
+                return rule["Value"]
 
     def get_maximum_iwo(self):
         """Return the maximum IWO constraint value."""
-        return self._settings["Maximum Index Write Overhead"]
+        for rule in self._settings["Rules"]:
+            if rule["Name"] == "Maximum Index Write Overhead":
+                return rule["Value"]
 
     def get_problem(self):
         """Return a deep copy of the problem data."""
@@ -311,25 +315,31 @@ class Reader:
 
         # Rules
         if "Rules" in settings:
-            rules = settings["Rules"]
+            self._settings["Rules"] = settings["Rules"]
         else:
-            rules = {}
+            self._settings["Rules"] = []
 
-        # Default rules if omitted (unconstrained)
-        if "Maximum Number of Possible Indexes" in rules:
-            # If the maximum number of possible indexes is <= 0, there is no solution
-            assert rules["Maximum Number of Possible Indexes"] >= 1
-            self._settings["Maximum Number of Possible Indexes"] = \
-                rules["Maximum Number of Possible Indexes"]
-        else:
-            self._settings["Maximum Number of Possible Indexes"] = self.get_num_pind()
+        # There should be no duplicate rules
+        rule_names = [rule["Name"] for rule in self._settings["Rules"]]
+        assert len(rule_names) == len(set(rule_names)), "Duplicate rules in settings input"
 
-        if "Maximum Index Write Overhead" in rules:
-            # If the maximum IWO is lower than the combined IWO of the existing indexes, no solution
-            # exists
-            assert self._upscale(rules["Maximum Index Write Overhead"]) > sum(self._problem["Index IWOs"][self.get_num_eind()])
-            self._settings["Maximum Index Write Overhead"] = self._upscale(rules["Maximum Index Write Overhead"])
-        else:
-            self._settings["Maximum Index Write Overhead"] = sum(self._problem["Index IWOs"])
+        # Add any missing rules
+        for rule_name in self._rule_defaults:
+            if rule_name not in rule_names:
+                self._settings["Rules"].append({"Name": rule_name,
+                                          "Value": self._rule_defaults[rule_name]})
 
-        self._settings["Rules"] = rules
+        # Set default values
+        for rule in self._settings["Rules"]:
+            if rule["Name"] == "Maximum Number of Possible Indexes":
+                if rule["Value"] is None:
+                    rule["Value"] = self.get_num_pind()
+                assert isinstance(rule["Value"], int)
+                assert rule["Value"] >= 1
+
+            if rule["Name"] == "Maximum Index Write Overhead":
+                if rule["Value"] is None:
+                    rule["Value"] = sum(self._problem["Index IWOs"])
+                else:
+                    assert isinstance(rule["Value"], (int, float))
+                    assert rule["Value"] >= 0.0

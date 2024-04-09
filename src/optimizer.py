@@ -55,7 +55,8 @@ class Optimizer:
 
             self._vprint("1. Creating a new basic model\n")
             model = modelize.build_basic_model(self._reader.get_problem(),
-                                               self._reader.get_settings())
+                                               self._reader.get_maximum_num_indexes(),
+                                               self._reader.get_maximum_iwo())
 
             self._vprint("2. Adding previously-optimized goals")
             if i == 0:
