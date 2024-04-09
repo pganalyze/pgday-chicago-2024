@@ -117,9 +117,6 @@ def compute_objective(rdr,
                       goal_name,
                       solution):
     """Compute and return the objective value of a solution."""
-    if goal_name == "Maximal Coverage":
-        return total_coverage(rdr, solution)
-
     if goal_name == "Minimal IWO":
         return total_iwo(rdr, solution) / 100  # TODO: Directly get the multiplier instead
 

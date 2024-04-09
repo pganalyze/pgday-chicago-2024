@@ -46,7 +46,7 @@ class Reader:
             pretty += f"{' '*8}{' '.join(str({self._downscale(x)}) for x in row)}\n"
         pretty += f"\n{' '*8}Goals:\n"
         for goal in self._settings["Goals"]:
-            pretty += f"{' '*8}{goal['Name']}: {goal['Strictness']}\n"
+            pretty += f"{' '*8}{goal['Name']}: {goal['Tolerance']}\n"
         pretty += f"\n{' '*8}Rules:\n"
         for rule, value in self._settings["Rules"].items():
             pretty += f"{' '*8}{rule}: {value}\n"
@@ -305,9 +305,9 @@ class Reader:
             self._settings["Goals"] = settings["Goals"]
         else:
             self._settings["Goals"] = [{"Name": "Minimal Cost",
-                                        "Strictness": 1},
+                                        "Tolerance": 0.0},
                                        {"Name": "Minimal Indexes",
-                                        "Strictness": 1}]
+                                        "Tolerance": 0.0}]
 
         # Rules
         if "Rules" in settings:

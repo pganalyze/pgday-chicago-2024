@@ -1,8 +1,8 @@
 {
     "Goals": [
         {
-            "Name": "Maximal Coverage",
-            "Strictness": 0.9
+            "Name": "Minimal Cost",
+            "Tolerance": 0.1
         },
         {
             "Name": "Minimal Indexes"

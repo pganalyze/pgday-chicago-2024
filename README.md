@@ -57,9 +57,7 @@ The model may also be provided with a settings file in JSON format, containing g
 
 ### Goals
 
-Goals are the main components that guide the model towards a solution. A combinations of up to four goals can be chosen.
-
-**Maximal Coverage**: Maximize the number of scans that are covered by indexes. A scan is considered covered by an index if that index provides the scan with a cost that is strictly better than the sequential read cost.
+Goals are the main components that guide the model towards a solution. A combination of up to three goals can be chosen.
 
 **Minimal Cost**: Minimize the combined cost of all the scans.
 
@@ -86,7 +84,7 @@ If no settings are selected by the user, the model will fall back to the default
     "Goals": [
         {
             "Name": "Minimal Cost",
-            "Strictness": 1.0
+            "Tolerance": 0.0
         },
         {
             "Name": "Minimal Indexes"
@@ -96,11 +94,11 @@ If no settings are selected by the user, the model will fall back to the default
 ```
 
 
-### Ordering the Goals and Strictness
+### Ordering the Goals and Tolerance
 
-When optimizing for multiple goals, these goals must be ordered by preference. The ordering of goals by preference does not need to be absolute, and can instead be made more flexible by specifying a strictness parameter for the goals.
+When optimizing for multiple goals, these goals must be ordered by preference. The ordering of goals by preference does not need to be absolute, but can instead be made more flexible by specifying a tolerance parameter for the goals.
 
-Each goal can optionally be specified with a strictness between 0.0 (0%) and 1.0 (100%). The strictness of a goal is defaulted to 1.0 if the parameter is left unspecified. When optimizing a goal, the resulting value indicates how well the goal has met its stated objective. The strictness of a goal indicates how close subsequent goals should stick to the value found by the optimization of that goal.
+The tolerance parameter is a measure of how strict the ordering of the goals is. Each goal has an associated tolerance value in the range [0.0, ∞] (defaulted to 0). When a goal is optimized, the resulting value indicates how well that goal has met its stated objective. The tolerance of that goal, in turn, indicates how close subsequent goals should stick to the value found for the original goal.
 
 
 #### Example of the Process
@@ -112,7 +110,7 @@ Suppose that the settings are as follows:
     "Goals": [
         {
             "Name": "Minimal Cost",
-            "Strictness": 0.9
+            "Tolerance": 0.1
         },
         {
             "Name": "Minimal IWO"

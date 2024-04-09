@@ -35,10 +35,10 @@ class Optimizer:
         # Extract all goals in order
         goals = []
         for gl in self._reader.get_settings()["Goals"]:
-            if "Strictness" not in gl:
-                gl["Strictness"] = 1
+            if "Tolerance" not in gl:
+                gl["Tolerance"] = 0.0
             goals.append(goal.Goal(gl["Name"],
-                                   gl["Strictness"]))
+                                   gl["Tolerance"]))
 
         self._vprint("Start of the solving process", highlight=True)
         self._vprint()

@@ -14,23 +14,22 @@ class Goal:
     A Goal object takes care of both the objective and the resulting constraint.
     """
 
-    _names = ("Maximal Coverage",
-              "Minimal IWO",
+    _names = ("Minimal IWO",
               "Minimal Indexes",
               "Minimal Cost")
 
-    def __init__(self, name, strictness=1):
+    def __init__(self, name, tolerance=0.0):
         """Intialize the goal.
 
         Args:
-          name: Name of the goal (e.g., "Maximal Coverage").
-          strictness: How strict the resulting constraint should be (0.0 <= strictness <= 1.0).
+          name: Name of the goal (e.g., "Minimal Cost").
+          tolerance: How much the resulting constraint is allowed to deviate from the value found (tolerance >= 0.0).
         """
         self._name = name
-        self._strictness = strictness
+        self._tolerance = tolerance
 
         assert self._name in self._names
-        assert 0.0 <= self._strictness <= 1.0
+        assert self._tolerance >= 0.0
 
         # Value of the optimized goal, None if it has not yet been optimized
         self._value = None
@@ -55,11 +54,7 @@ class Goal:
 
     def add_as_objective(self, model):
         """Add the goal as an objective to the model."""
-        if self._name == "Maximal Coverage":
-            model.Add(model.objective == cp_model.LinearExpr.Sum(model.is_covered))
-            model.Maximize(model.objective)
-
-        elif self._name == "Minimal IWO":
+        if self._name == "Minimal IWO":
             model.Add(model.objective ==
                       cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo))
             model.Minimize(model.objective)
@@ -76,30 +71,23 @@ class Goal:
         """Add the goal as a constraint to the model."""
         assert self.is_optimized()
 
-        if self._name == "Maximal Coverage":
-            model.Add(cp_model.LinearExpr.Sum([model.is_covered[j] for j in range(model.num_scans)])
-                      >= ceil(self.get_value() * self._strictness))
-
-        elif self._name == "Minimal IWO":
+        if self._name == "Minimal IWO":
             model.Add(cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo)
-                      <= floor(self.get_value() * (2 - self._strictness)))
+                      <= floor(self.get_value() * (1 + self._tolerance)))
 
         elif self._name == "Minimal Indexes":
             model.Add(cp_model.LinearExpr.Sum(model.x)
-                      <= floor(self.get_value() * (2 - self._strictness)))
+                      <= floor(self.get_value() * (1 + self._tolerance)))
 
         elif self._name == "Minimal Cost":
             model.Add(cp_model.LinearExpr.Sum(model.scan_cost)
-                      <= floor(self.get_value() * (2 - self._strictness)))
+                      <= floor(self.get_value() * (1 + self._tolerance)))
 
     def get_objective_description(self):
         """Return the description of the objective."""
         description = ""
 
-        if self._name == "Maximal Coverage":
-            description = "Maximize the number of scans covered (by existing and possible indexes)"
-
-        elif self._name == "Minimal IWO":
+        if self._name == "Minimal IWO":
             description = "Minimize the sum of IWO (of the existing and possible indexes)"
 
         elif self._name == "Minimal Indexes":
@@ -114,20 +102,13 @@ class Goal:
         """Return the description of the constraint."""
         assert self.is_optimized()
 
-        ceil_suffix = "must be at least " + \
-            f"{ceil(self.get_value()) * self._strictness:.2f} " + \
-            f"({self.get_value()} with a strictness of {self._strictness:.2%})"
-
         floor_suffix = "must be at most " + \
-            f"{floor(self.get_value()) * (2 - self._strictness):.2f} " + \
-            f"({self.get_value()} with a strictness of {self._strictness:.2%})"
+            f"{floor(self.get_value()) * (1 + self._tolerance):.2f} " + \
+            f"({self.get_value()} with a tolerance of {self._tolerance:.2%})"
 
         description = ""
 
-        if self._name == "Maximal Coverage":
-            description = f"Scan coverage (by existing and possible indexes) {ceil_suffix}"
-
-        elif self._name == "Minimal IWO":
+        if self._name == "Minimal IWO":
             description = f"The sum of all IWO {floor_suffix}"
 
         elif self._name == "Minimal Indexes":
