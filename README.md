@@ -63,7 +63,7 @@ Goals are the main components that guide the model towards a solution. A combina
 
 **Minimal Indexes**: Minimize the number of indexes that are selected.
 
-**Minimal IWO**: Minimize the combined index write overhead (IWO) of the existing and possible indexes that are selected.
+**Minimize Index Write Overhead**: Minimize the combined index write overhead (IWO) of the existing and possible indexes that are selected.
 
 
 ### Rules
@@ -113,7 +113,7 @@ Suppose that the settings are as follows:
             "Tolerance": 0.1
         },
         {
-            "Name": "Minimal IWO"
+            "Name": "Minimize Index Write Overhead"
         }
     ],
     "Rules":

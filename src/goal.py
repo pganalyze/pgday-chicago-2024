@@ -14,7 +14,7 @@ class Goal:
     A Goal object takes care of both the objective and the resulting constraint.
     """
 
-    _names = ("Minimal IWO",
+    _names = ("Minimize Index Write Overhead",
               "Minimal Indexes",
               "Minimal Cost")
 
@@ -54,7 +54,7 @@ class Goal:
 
     def add_as_objective(self, model):
         """Add the goal as an objective to the model."""
-        if self._name == "Minimal IWO":
+        if self._name == "Minimize Index Write Overhead":
             model.Add(model.objective ==
                       cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo))
             model.Minimize(model.objective)
@@ -71,7 +71,7 @@ class Goal:
         """Add the goal as a constraint to the model."""
         assert self.is_optimized()
 
-        if self._name == "Minimal IWO":
+        if self._name == "Minimize Index Write Overhead":
             model.Add(cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo)
                       <= floor(self.get_value() * (1 + self._tolerance)))
 
@@ -87,7 +87,7 @@ class Goal:
         """Return the description of the objective."""
         description = ""
 
-        if self._name == "Minimal IWO":
+        if self._name == "Minimize Index Write Overhead":
             description = "Minimize the sum of IWO (of the existing and possible indexes)"
 
         elif self._name == "Minimal Indexes":
@@ -108,7 +108,7 @@ class Goal:
 
         description = ""
 
-        if self._name == "Minimal IWO":
+        if self._name == "Minimize Index Write Overhead":
             description = f"The sum of all IWO {floor_suffix}"
 
         elif self._name == "Minimal Indexes":

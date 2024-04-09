@@ -117,7 +117,7 @@ def compute_objective(rdr,
                       goal_name,
                       solution):
     """Compute and return the objective value of a solution."""
-    if goal_name == "Minimal IWO":
+    if goal_name == "Minimize Index Write Overhead":
         return total_iwo(rdr, solution) / 100  # TODO: Directly get the multiplier instead
 
     if goal_name == "Minimal Indexes":
