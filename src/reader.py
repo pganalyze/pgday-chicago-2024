@@ -304,9 +304,9 @@ class Reader:
         if "Goals" in settings:
             self._settings["Goals"] = settings["Goals"]
         else:
-            self._settings["Goals"] = [{"Name": "Minimal Cost",
+            self._settings["Goals"] = [{"Name": "Minimize Total Cost",
                                         "Tolerance": 0.0},
-                                       {"Name": "Minimal Indexes",
+                                       {"Name": "Minimize Number of Indexes",
                                         "Tolerance": 0.0}]
 
         # Rules

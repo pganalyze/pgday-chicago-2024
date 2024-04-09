@@ -15,14 +15,14 @@ class Goal:
     """
 
     _names = ("Minimize Index Write Overhead",
-              "Minimal Indexes",
-              "Minimal Cost")
+              "Minimize Number of Indexes",
+              "Minimize Total Cost")
 
     def __init__(self, name, tolerance=0.0):
         """Intialize the goal.
 
         Args:
-          name: Name of the goal (e.g., "Minimal Cost").
+          name: Name of the goal (e.g., "Minimize Total Cost").
           tolerance: How much the resulting constraint is allowed to deviate from the value found (tolerance >= 0.0).
         """
         self._name = name
@@ -59,11 +59,11 @@ class Goal:
                       cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo))
             model.Minimize(model.objective)
 
-        elif self._name == "Minimal Indexes":
+        elif self._name == "Minimize Number of Indexes":
             model.Add(model.objective == cp_model.LinearExpr.Sum(model.x))
             model.Minimize(model.objective)
 
-        elif self._name == "Minimal Cost":
+        elif self._name == "Minimize Total Cost":
             model.Add(model.objective == cp_model.LinearExpr.Sum(model.scan_cost))
             model.Minimize(model.objective)
 
@@ -75,11 +75,11 @@ class Goal:
             model.Add(cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo)
                       <= floor(self.get_value() * (1 + self._tolerance)))
 
-        elif self._name == "Minimal Indexes":
+        elif self._name == "Minimize Number of Indexes":
             model.Add(cp_model.LinearExpr.Sum(model.x)
                       <= floor(self.get_value() * (1 + self._tolerance)))
 
-        elif self._name == "Minimal Cost":
+        elif self._name == "Minimize Total Cost":
             model.Add(cp_model.LinearExpr.Sum(model.scan_cost)
                       <= floor(self.get_value() * (1 + self._tolerance)))
 
@@ -90,10 +90,10 @@ class Goal:
         if self._name == "Minimize Index Write Overhead":
             description = "Minimize the sum of IWO (of the existing and possible indexes)"
 
-        elif self._name == "Minimal Indexes":
+        elif self._name == "Minimize Number of Indexes":
             description = "Minimize the number of existing and possible indexes"
 
-        elif self._name == "Minimal Cost":
+        elif self._name == "Minimize Total Cost":
             description = "Minimize the combined costs of all the scans"
 
         return description
@@ -111,10 +111,10 @@ class Goal:
         if self._name == "Minimize Index Write Overhead":
             description = f"The sum of all IWO {floor_suffix}"
 
-        elif self._name == "Minimal Indexes":
+        elif self._name == "Minimize Number of Indexes":
             description = f"The number of existing and possible indexes {floor_suffix}"
 
-        elif self._name == "Minimal Cost":
+        elif self._name == "Minimize Total Cost":
             description = f"The combined costs of all the scans {floor_suffix}"
 
         return description

@@ -1,11 +1,11 @@
 {
     "Goals": [
         {
-            "Name": "Minimal Cost",
+            "Name": "Minimize Total Cost",
             "Tolerance": 0.1
         },
         {
-            "Name": "Minimal Indexes"
+            "Name": "Minimize Number of Indexes"
         }
     ],
     "Rules":

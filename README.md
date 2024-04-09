@@ -59,9 +59,9 @@ The model may also be provided with a settings file in JSON format, containing g
 
 Goals are the main components that guide the model towards a solution. A combination of up to three goals can be chosen.
 
-**Minimal Cost**: Minimize the combined cost of all the scans.
+**Minimize Total Cost**: Minimize the combined cost of all the scans.
 
-**Minimal Indexes**: Minimize the number of indexes that are selected.
+**Minimize Number of Indexes**: Minimize the number of indexes that are selected.
 
 **Minimize Index Write Overhead**: Minimize the combined index write overhead (IWO) of the existing and possible indexes that are selected.
 
@@ -83,11 +83,11 @@ If no settings are selected by the user, the model will fall back to the default
 {
     "Goals": [
         {
-            "Name": "Minimal Cost",
+            "Name": "Minimize Total Cost",
             "Tolerance": 0.0
         },
         {
-            "Name": "Minimal Indexes"
+            "Name": "Minimize Number of Indexes"
         }
     ]
 }
@@ -109,7 +109,7 @@ Suppose that the settings are as follows:
 {
     "Goals": [
         {
-            "Name": "Minimal Cost",
+            "Name": "Minimize Total Cost",
             "Tolerance": 0.1
         },
         {
@@ -141,10 +141,10 @@ A sample output of the model with some comments:
 {
     "Goals": [                               // List of goals in order
         {
-            "Minimal Cost": 212.2            // First goal and its associated value
+            "Minimize Total Cost": 212.2     // First goal and its associated value
         },
         {
-            "Minimal Indexes": 1             // Second goal and its associated value
+            "Minimize Number of Indexes": 1  // Second goal and its associated value
         }
     ],
     "Scans": [                               // List of all scans
