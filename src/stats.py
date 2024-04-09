@@ -118,10 +118,10 @@ def compute_objective(rdr,
                       solution):
     """Compute and return the objective value of a solution."""
     if goal_name == "Minimize Index Write Overhead":
-        return total_iwo(rdr, solution) / 100  # TODO: Directly get the multiplier instead
+        return total_iwo(rdr, solution) / rdr.get_multiplier()
 
     if goal_name == "Minimize Number of Indexes":
         return num_indexes_used(solution)
 
     if goal_name == "Minimize Total Cost":
-        return total_cost(rdr, solution) / 100  # TODO: Directly get the multiplier instead
+        return total_cost(rdr, solution) / rdr.get_multiplier()

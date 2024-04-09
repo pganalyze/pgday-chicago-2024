@@ -60,6 +60,10 @@ class Reader:
         """Downscale the value w.r.t. the multiplier."""
         return value / self._multiplier
 
+    def get_multiplier(self):
+        """Return the multiplier."""
+        return self._multiplier
+
     def get_scan_id(self, scan):
         """Return the ID of a scan."""
         return self._translation["Scan IDs"][scan]
