@@ -72,7 +72,7 @@ Two rules can be enforced by the model.
 
 **Maximum Number of Possible Indexes**: Do not select more than X possible indexes.
 
-**Maximum IWO**: The combined IWO of the selected indexes (existing and possible) may not be higher than X.
+**Maximum Index Write Overhead**: The combined IWO of the selected indexes (existing and possible) may not be higher than X.
 
 
 ### Default Settings

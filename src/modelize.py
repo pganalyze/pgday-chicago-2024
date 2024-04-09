@@ -33,7 +33,7 @@ def build_basic_model(problem, settings):
     # Misc.
     model.max_num_indexes = settings["Maximum Number of Possible Indexes"] + \
         problem["Number of Existing Indexes"]  # Since einds are fixed, they must be included here
-    model.max_iwo = settings["Maximum IWO"]
+    model.max_iwo = settings["Maximum Index Write Overhead"]
 
     ### Objective
 
@@ -82,7 +82,7 @@ def build_basic_model(problem, settings):
     # Maximum Number of Possible Indexes
     model.Add(sum(model.x) <= model.max_num_indexes)
 
-    # Maximum IWO
+    # Maximum Index Write Overhead
     model.Add(cp_model.LinearExpr.WeightedSum(model.x, model.index_iwo)
               <= model.max_iwo)
 

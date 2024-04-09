@@ -45,7 +45,7 @@ class Optimizer:
 
         self._vprint("Constraints", highlight=True)
         self._vprint(f"Maximum Number of Indexes: {self._reader.get_maximum_num_indexes()}")
-        self._vprint(f"Maximum IWO: {self._reader.get_maximum_iwo()}")
+        self._vprint(f"Maximum Index Write Overhead: {self._reader.get_maximum_iwo()}")
         self._vprint()
 
         i = 0

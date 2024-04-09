@@ -18,7 +18,7 @@ class Reader:
 
     # Default optimizer settings
     _maximum_num_indexes = None  # Maximum number of indexes allowed
-    _maximum_iwo = None          # Maximum IWO allowed
+    _maximum_iwo = None          # Maximum Index Write Overhead allowed
 
     def __init__(self, problem, time_limit, settings=None):
         """Read and store the problem data and the optimizer settings from serialized JSON objects.
@@ -104,7 +104,7 @@ class Reader:
 
     def get_maximum_iwo(self):
         """Return the maximum IWO constraint value."""
-        return self._settings["Maximum IWO"]
+        return self._settings["Maximum Index Write Overhead"]
 
     def get_problem(self):
         """Return a deep copy of the problem data."""
@@ -324,12 +324,12 @@ class Reader:
         else:
             self._settings["Maximum Number of Possible Indexes"] = self.get_num_pind()
 
-        if "Maximum IWO" in rules:
+        if "Maximum Index Write Overhead" in rules:
             # If the maximum IWO is lower than the combined IWO of the existing indexes, no solution
             # exists
-            assert self._upscale(rules["Maximum IWO"]) > sum(self._problem["Index IWOs"][self.get_num_eind()])
-            self._settings["Maximum IWO"] = self._upscale(rules["Maximum IWO"])
+            assert self._upscale(rules["Maximum Index Write Overhead"]) > sum(self._problem["Index IWOs"][self.get_num_eind()])
+            self._settings["Maximum Index Write Overhead"] = self._upscale(rules["Maximum Index Write Overhead"])
         else:
-            self._settings["Maximum IWO"] = sum(self._problem["Index IWOs"])
+            self._settings["Maximum Index Write Overhead"] = sum(self._problem["Index IWOs"])
 
         self._settings["Rules"] = rules
