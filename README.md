@@ -1,6 +1,6 @@
-# Constraint Programming Model for Index Selection in Postgres (PGCon 2023)
+# Constraint Programming Model for Index Selection in Postgres (PGDay 2024)
 
-This repository contains everything necessary to run the constraint programming model for index selection presented in the PGCon 2023 talk [Automating Index Selection Using Constraint Programming](https://www.pgcon.org/events/pgcon_2023/schedule/session/422-automating-index-selection-using-constraint-programming/).
+This repository contains everything necessary to run the constraint programming model for index selection presented in the PGDay 2024 talk [Automating Index Selection Using Constraint Programming](https://postgresql.us/events/pgdaychicago2024/schedule/session/1561-automating-postgres-index-selection-using-constraint-programming/).
 
 Creating indexes on a table in order to meet some requirements (performance, resource budget, etc) is typically done by hand. This model can be used as part of automation that suggests a selection of good indexes to meet arbitrary user requirements. These requirements are expressed in terms of [goals](#goals) and [rules](#rules).
 
@@ -26,10 +26,10 @@ You can immediately run the model on the example data. From the main directory:
 $ python3 src/main.py -d examples/data_example.json
 ```
 
-This will find the indexes that minimize the combined costs of the scans, using as few indexes as needed. The output of this command is explained [here](#model-output). To use custom settings and a time limit:
+This will find the indexes that minimize the combined costs of the scans, using as few indexes as needed. The output of this command is explained [here](#model-output). To use custom settings:
 
 ```bash
-$ python3 src/main.py -d examples/data_example.json -s examples/settings_example.json -t 10
+$ python3 src/main.py -d examples/data_example.json -s examples/settings_example.json
 ```
 
 For details on the various options:
@@ -81,15 +81,17 @@ If no settings are selected by the user, the model will fall back to the default
 
 ```json
 {
-    "Goals": [
-        {
-            "Name": "Minimize Total Cost",
-            "Tolerance": 0.0
-        },
-        {
-            "Name": "Minimize Number of Indexes"
-        }
-    ]
+    "Options": {
+        "Goals": [
+            {
+                "Name": "Minimize Total Cost",
+                "Tolerance": 0.0
+            },
+            {
+                "Name": "Minimize Number of Indexes"
+            }
+        ]
+    }
 }
 ```
 
@@ -216,4 +218,4 @@ A sample output of the model with some comments:
 
 This repository is licensed under the 3-clause BSD license, see LICENSE file for details.
 
-Copyright (c) 2023, Duboce Labs, Inc. (pganalyze)
+Copyright (c) 2024, Duboce Labs, Inc. (pganalyze)
