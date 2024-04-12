@@ -8,7 +8,6 @@ import reader
 
 
 def run(data_json,
-        time_limit,
         settings_json=None,
         print_input_data=False,
         log_level=0):
@@ -16,7 +15,6 @@ def run(data_json,
 
     Args:
       data_json: The serialized "Explain" JSON object (string).
-      time_limit: The time limit in seconds.
       settings_json: The serialized optimizer settings JSON object (string).
       print_input_data: If we should print the data.
       log_level: Integer indicating printing level (0 = silent, 1 = normal, 2 = verbose).
@@ -25,7 +23,6 @@ def run(data_json,
       A serialized JSON object of the results (string).
     """
     rdr = reader.Reader(data_json,
-                        time_limit,
                         settings_json)
 
     if print_input_data:

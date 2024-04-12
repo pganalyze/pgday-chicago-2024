@@ -35,8 +35,6 @@ if __name__ == "__main__":
     elif use_stdin_for_settings:
         settings_json = sys.stdin.read()
 
-    time_limit = cli_args["Time Limit"]
-
     verbose = cli_args["Verbose"]
 
     log_level = 0
@@ -44,7 +42,6 @@ if __name__ == "__main__":
         log_level = 2
 
     results = utils.run(data_json,
-                        time_limit,
                         settings_json,
                         print_input_data=verbose,
                         log_level=log_level)

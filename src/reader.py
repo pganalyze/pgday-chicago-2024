@@ -20,7 +20,7 @@ class Reader:
     _rule_defaults = {"Maximum Number of Possible Indexes": None,
                       "Maximum Index Write Overhead": None}
 
-    def __init__(self, problem, time_limit, settings=None):
+    def __init__(self, problem, settings=None):
         """Read and store the problem data and the optimizer settings from serialized JSON objects.
 
         Default optimizer settings will be provided if some are missing from the settings.
@@ -31,8 +31,6 @@ class Reader:
         if settings is None:
             settings = json.dumps({})
         self._read_settings(json.loads(settings))
-
-        self._time_limit = time_limit
 
     def __str__(self):
         """For pretty printing the Reader object."""
@@ -347,3 +345,11 @@ class Reader:
                 else:
                     assert isinstance(rule["Value"], (int, float))
                     assert rule["Value"] >= 0.0
+
+        # Time limit
+        if "Time Limit" in settings:
+            self._time_limit = settings["Time Limit"]
+            assert isinstance(self._time_limit, (float, int))
+            assert self._time_limit >= 0
+        else:
+            self._time_limit = 999999

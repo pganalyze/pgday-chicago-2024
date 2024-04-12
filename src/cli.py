@@ -29,15 +29,6 @@ def get_cli_args():
         help="JSON settings file")
 
     parser.add_argument(
-        "-t",
-        "--timelimit",
-        metavar="SECONDS",
-        nargs="?",
-        default=999999.0,
-        type=float,
-        help="time limit allowed for each goal (seconds)")
-
-    parser.add_argument(
         "-v",
         "--verbose",
         default=False,
@@ -46,9 +37,6 @@ def get_cli_args():
 
     args = parser.parse_args()
 
-    assert isinstance(args.timelimit, float) and args.timelimit >= 0
-
     return {"Data JSON": args.data[0],
             "Settings JSON": None if args.settings is None else args.settings[0],
-            "Time Limit": args.timelimit,
             "Verbose": args.verbose}
