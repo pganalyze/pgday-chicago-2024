@@ -1,15 +1,19 @@
 {
-    "Goals": [
-        {
-            "Name": "Minimize Total Cost",
-            "Tolerance": 0.1
-        },
-        {
-            "Name": "Minimize Number of Indexes"
-        }
-    ],
-    "Rules":
-    {
-        "Maximum Number of Possible Indexes": 3
+    "Options": {
+        "Goals": [
+            {
+                "Name": "Minimize Total Cost",
+                "Tolerance": 0.1
+            },
+            {
+                "Name": "Minimize Number of Indexes"
+            }
+        ],
+        "Rules": [
+            {
+                "Name": "Maximum Number of Possible Indexes",
+                "Value": 3
+            }
+	]
     }
 }

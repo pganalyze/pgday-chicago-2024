@@ -309,8 +309,8 @@ class Reader:
         Provides default values if necessary.
         """
         # Goals (default value if omitted)
-        if "Goals" in settings:
-            self._settings["Goals"] = settings["Goals"]
+        if "Goals" in settings["Options"]:
+            self._settings["Goals"] = settings["Options"]["Goals"]
         else:
             self._settings["Goals"] = [{"Name": "Minimize Total Cost",
                                         "Tolerance": 0.0},
@@ -318,8 +318,8 @@ class Reader:
                                         "Tolerance": 0.0}]
 
         # Rules
-        if "Rules" in settings:
-            self._settings["Rules"] = settings["Rules"]
+        if "Rules" in settings["Options"]:
+            self._settings["Rules"] = settings["Options"]["Rules"]
         else:
             self._settings["Rules"] = []
 
