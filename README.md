@@ -109,18 +109,20 @@ Suppose that the settings are as follows:
 
 ```json
 {
-    "Goals": [
+    "Options": {
+        "Goals": [
+            {
+                "Name": "Minimize Total Cost",
+                "Tolerance": 0.1
+            },
+            {
+                "Name": "Minimize Index Write Overhead"
+            }
+        ],
+        "Rules":
         {
-            "Name": "Minimize Total Cost",
-            "Tolerance": 0.1
-        },
-        {
-            "Name": "Minimize Index Write Overhead"
+            "Maximum Number of Possible Indexes": 4
         }
-    ],
-    "Rules":
-    {
-        "Maximum Number of Possible Indexes": 4
     }
 }
 ```
