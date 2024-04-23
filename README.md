@@ -81,6 +81,7 @@ If no settings are selected by the user, the model will fall back to the default
 
 ```json
 {
+    "Method": "CP-2024-04",
     "Options": {
         "Goals": [
             {
@@ -109,6 +110,7 @@ Suppose that the settings are as follows:
 
 ```json
 {
+    "Method": "CP-2024-04",
     "Options": {
         "Goals": [
             {
@@ -119,10 +121,12 @@ Suppose that the settings are as follows:
                 "Name": "Minimize Index Write Overhead"
             }
         ],
-        "Rules":
-        {
-            "Maximum Number of Possible Indexes": 4
-        }
+        "Rules": [
+            {
+                "Name": "Maximum Number of Possible Indexes",
+                "Value": 4
+            }
+        ]
     }
 }
 ```
