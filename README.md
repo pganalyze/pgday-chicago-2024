@@ -1,6 +1,6 @@
-# Constraint Programming Model for Index Selection in Postgres (PGDay 2024)
+# Constraint Programming Model for Index Selection in Postgres (PGDay Chicago 2024)
 
-This repository contains everything necessary to run the constraint programming model for index selection presented in the PGDay 2024 talk [Automating Index Selection Using Constraint Programming](https://postgresql.us/events/pgdaychicago2024/schedule/session/1561-automating-postgres-index-selection-using-constraint-programming/).
+This repository contains everything necessary to run the constraint programming model for index selection presented in the PGDay Chicago 2024 talk [Automating Index Selection Using Constraint Programming](https://postgresql.us/events/pgdaychicago2024/schedule/session/1561-automating-postgres-index-selection-using-constraint-programming/).
 
 Creating indexes on a table in order to meet some requirements (performance, resource budget, etc) is typically done by hand. This model can be used as part of automation that suggests a selection of good indexes to meet arbitrary user requirements. These requirements are expressed in terms of [goals](#goals) and [rules](#rules).
 
